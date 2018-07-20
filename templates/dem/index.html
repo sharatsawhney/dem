@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+	<title>GeoGrid</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+	<style>
+	body{
+	    background: url({% static 'images/home.png' %}) no-repeat;
+		background-size: 100% 670px;
+		font-family: 'Montserrat', sans-serif;
+		position: relative;
+	}
+	.header{
+	    position: absolute;
+	    font-size: 40px;
+		color: #84c91c;
+		left:68px;
+		top:20px;
+	}
+	.para1{
+	    position: absolute;
+	    font-size: 15px;
+		color:  #457c09;
+		left: 68px;
+		top: 120px;
+		width: 40%;
+	}
+	.para2{
+	    position: absolute;
+	    font-size: 15px;
+		color:  #457c09;
+		left: 68px;
+		top:220px;
+		width: 40%;
+	}
+	.upload{
+	    position: absolute;
+	    font-size: 15px;
+		color:  #457c09;
+		left: 68px;
+		top:350px;
+		text-decoration: none;
+		border: 2px solid #457c09;
+		border-radius: 26px;
+		padding: 10px 20px 10px 20px;
+	}
+	.links{
+	    position: absolute;
+	    color:  white;
+	    font-size: 15px;
+	    text-decoration: none;
+		border: 2px solid #457c09;
+		border-radius: 26px;
+		padding: 10px 20px 10px 20px;
+		left:10px;
+		width: 80%;
+	}
+	.links:hover{
+	    color: white;
+		 text-decoration: none;
+		 font-weight: bold;
+	}
+	.link1{
+	    top:20%;
+		
+	}
+	.link2{
+	    top: 30%;
+	}
+	.link3{
+	    top: 40%;
+	}
+	.link4{
+	    top: 50%;
+	}
+	.sidebar{
+	    background-color: #183f11;
+		position: fixed;
+		top: -20px;
+		left: 0px;
+		width: 4%;
+		height: 120%;
+	}
+	.navbar{
+	    background-color: #183f11;
+		position: fixed;
+		top: -20px;
+		left: 0px;
+		width: 15%;
+		height: 120%;
+		display: none;
+	}
+	#icon{
+	    position: absolute;
+	    top:50px;
+		left: 7px;
+		
+	}
+	#cross{
+	    position: absolute;
+		width: 30px;
+		top: 50px;
+		left: 70%;
+	}
+
+	</style>
+  </head>
+  <body>
+    <div class="header">GEOGRID</div>
+	<p class="para1">GeoGrid is a Web-based tool to query, form, comprehend and analyze Digital Elevation 
+	Models(DEM) in Real-time using Web Servers to simplify field work and diminish the sophistication
+	involved in using similar office tools.</p>
+	<p class="para2">We can use these DEMs(Digital Elevation
+    models) to get a qualitative and quantitative analysis and data for constructional challenges and to
+    solve real world problems like Flood Control and Slope Analysis.</p>
+    <a href="upload/" class="upload">UPLOAD DATA</a>
+	<div class="sidebar">
+	    <img id="icon" src="{% static 'images/icon.png' %}">
+	</div>
+	<div class="navbar">
+	    <img id="cross" src="{% static 'images/cross.png' %}">
+		
+		<a href="sample/" class="links link1">Sample DEM</a>
+		<a href="ask/" class="links link2">Query DEM</a>
+		<a href="elevation/" class="links link3">Query Elevation</a>
+	</div>
+	
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+	<script>
+	
+        $(document).ready(function(){
+		    
+			
+		    $("#icon").click(function(){
+			    $(".navbar").show();
+				$(".header, .para1, .para2, .upload").css("left", "16%");
+			});
+			$("#cross").click(function(){
+			    $(".navbar").hide();
+				$(".header, .para1, .para2, .upload").css("left", "68px");
+			});
+		});
+		
+	</script>
+  </body>
+</html>

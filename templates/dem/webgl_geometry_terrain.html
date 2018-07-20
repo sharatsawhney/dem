@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+	<head>
+		<title>DEM Model</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+		<style>
+			body {
+				color: #61443e;
+				font-family:'Montserrat', sans-serif;
+				font-size:13px;
+				text-align:center;
+
+				background-color: #EFF9D9;
+				margin: 0px;
+				overflow: hidden;
+			}
+
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+			}
+
+			a {
+
+				color: #a06851;
+			}
+			.header{
+				position: absolute;
+				font-size: 40px;
+				color: #ffffff;
+				left:10px;
+				top:70px;
+				
+				
+				text-align: left:
+			}
+	.para1{
+	    position: absolute;
+	    font-size: 15px;
+		color:  #457c09;
+		left: 68px;
+		top: 120px;
+		width: 40%;
+	}
+	.para2{
+	    position: absolute;
+	    font-size: 15px;
+		color:  #457c09;
+		left: 68px;
+		top:220px;
+		width: 40%;
+	}
+	.upload{
+	    position: absolute;
+	    font-size: 15px;
+		color:  #457c09;
+		left: 68px;
+		top:350px;
+		text-decoration: none;
+		border: 2px solid #457c09;
+		border-radius: 26px;
+		padding: 10px 20px 10px 20px;
+	}
+	.links{
+	    position: absolute;
+	    color:  white;
+	    font-size: 15px;
+	    text-decoration: none;
+		border: 2px solid #457c09;
+		border-radius: 26px;
+		padding: 10px 20px 10px 20px;
+		left:10px;
+		width: 80%;
+	}
+	.links:hover{
+	    color: white;
+		 text-decoration: none;
+		 font-weight: bold;
+	}
+	.link1{
+	    top:20%;
+		
+	}
+	.link2{
+	    top: 30%;
+	}
+	.link3{
+	    top: 40%;
+	}
+	.link4{
+	    top: 50%;
+	}
+	.sidebar{
+	    background-color: #183f11;
+		position: fixed;
+		top: -20px;
+		left: 0px;
+		width: 4%;
+		height: 120%;
+	}
+	.navbar{
+	    background-color: #183f11;
+		position: fixed;
+		top: -20px;
+		left: 0px;
+		width: 20%;
+		height: 120%;
+		
+	}
+	#icon{
+	    position: absolute;
+	    top:50px;
+		left: 7px;
+		
+	}
+	#cross{
+	    position: absolute;
+		width: 30px;
+		top: 85px;
+		left: 85%;
+	}
+	.field{
+	    color: white;
+		margin-top: 380px;
+	}
+	.fieldname{
+	    text-align: left;
+	}
+	.fieldvalue{
+	    border: 1px dashed white;
+		border-radius: 20px;
+		text-align: left;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		padding-left: 10px;
+	}
+
+		</style>
+	</head>
+	<body>
+
+		<div id="container"><br /><br /><br /><br /><br />Generating DEM...</div>
+		<div class="sidebar">
+			<img id="icon" src="{% static 'images/hamburger.png' %}">
+		</div>
+		<div class="navbar">
+			<img id="cross" src="{% static 'images/cross.png' %}">
+		    <div class="header">GEOGRID</div>
+			<a href="/dem/" class="links link1">Home</a>
+			
+			<a href="/dem/ask/" class="links link2">Query DEM</a>
+			<a href="/dem/elevation/" class="links link3">Query Elevation</a>
+			{% if lat %}
+			<div class="field">
+				<p class="fieldname">LATITUDE</p>
+				<p class="fieldvalue">{{ lat }}<p>
+				<p class="fieldname">LONGITUDE</p>
+				<p class="fieldvalue">{{ long }}</p>
+				<p class="fieldname">ElEVATION</p>
+				<p class="fieldvalue">{{ elevation }}</p>
+			</div>
+			{% endif %}
+		</div>
+
+		<script src="{% static 'build/three.js' %}"></script>
+
+		<script src="{% static 'examples/js/controls/FirstPersonControls.js' %}"></script>
+
+		<script src="{% static 'examples/js/ImprovedNoise.js' %}"></script>
+		<script src="{% static 'examples/js/Detector.js' %}"></script>
+		<script src="{% static 'examples/js/libs/stats.min.js' %}"></script>
+		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+		<script>
+		
+           $(document).ready(function(){
+				$("#icon").click(function(){
+					$(".navbar").show();
+					
+				});
+				$("#cross").click(function(){
+					$(".navbar").hide();
+					
+				});
+			});
+			if ( ! Detector.webgl ) {
+
+				Detector.addGetWebGLMessage();
+				document.getElementById( 'container' ).innerHTML = "";
+
+			}
+
+			var container, stats;
+
+			var camera, controls, scene, renderer;
+
+			var mesh, texture;
+
+			var worldWidth = 10, worldDepth = 10
+			worldHalfWidth = worldWidth / 2, worldHalfDepth = worldDepth / 2;
+
+			var clock = new THREE.Clock();
+
+			init();
+			animate();
+
+			function init() {
+
+				container = document.getElementById( 'container' );
+
+				camera = new THREE.PerspectiveCamera( 100, window.innerWidth / window.innerHeight, 1, 20000 );
+
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color( 0xEFF9D9);
+
+				controls = new THREE.FirstPersonControls( camera );
+				controls.movementSpeed = 1000;
+				controls.lookSpeed = 0.08;
+				controls.lookVertical = true;;
+
+				var data = generateHeight( worldWidth, worldDepth );
+
+				camera.position.y = data[ worldHalfWidth + worldHalfDepth * worldWidth ] * 10 + 500;
+
+				var geometry = new THREE.PlaneBufferGeometry( 7500, 7500, worldWidth - 1 , worldDepth - 1  );
+				geometry.rotateX( - Math.PI / 2 );
+
+				var vertices = geometry.attributes.position.array;
+
+				for ( var i = 0, j = 0, l = vertices.length; i < l; i ++, j += 3 ) {
+
+					vertices[ j + 1 ] = data[ i ] * 10;
+
+				}
+
+				texture = new THREE.CanvasTexture( generateTexture( data, worldWidth, worldDepth ) );
+				texture.wrapS = THREE.ClampToEdgeWrapping;
+				texture.wrapT = THREE.ClampToEdgeWrapping;
+
+				mesh = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( { map: texture } ) );
+				scene.add( mesh );
+
+				renderer = new THREE.WebGLRenderer();
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				container.innerHTML = "";
+
+				container.appendChild( renderer.domElement );
+
+				stats = new Stats();
+				container.appendChild( stats.dom );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				controls.handleResize();
+
+			}
+
+			function generateHeight( width, height ) {
+
+				var size = width * height, data = new Uint8Array( size ),
+				perlin = new ImprovedNoise(), quality = 1, z = Math.random() * 100;
+
+				for ( var j = 0; j < 4; j ++ ) {
+				     var store = [];
+					 var k = 0;
+                    {% for ele in elev %}
+					    store[k] = {{ ele.elev }}
+						k = k + 1;
+					{% endfor %}
+					
+					for ( var i = 0; i < size; i ++ ) {
+
+						var x = i % width, y = ~~ ( i / width );
+						
+						data[ i ] = parseFloat(store[i]) * quality * 0.015 ;
+						
+
+					}
+					
+
+					quality *= 5;
+
+				}
+
+				return data;
+
+			}
+
+			function generateTexture( data, width, height ) {
+
+				var canvas, canvasScaled, context, image, imageData,
+				level, diff, vector3, sun, shade;
+
+				vector3 = new THREE.Vector3( 0, 0, 0 );
+
+				sun = new THREE.Vector3( 1, 1, 1 );
+				sun.normalize();
+
+				canvas = document.createElement( 'canvas' );
+				canvas.width = width;
+				canvas.height = height;
+
+				context = canvas.getContext( '2d' );
+				context.fillStyle = '#000';
+				context.fillRect( 0, 0, width, height );
+
+				image = context.getImageData( 0, 0, canvas.width, canvas.height );
+				imageData = image.data;
+
+				for ( var i = 0, j = 0, l = imageData.length; i < l; i += 4, j ++ ) {
+
+					vector3.x = data[ j - 2 ] - data[ j + 2 ];
+					vector3.y = 2;
+					vector3.z = data[ j - width * 2 ] - data[ j + width * 2 ];
+					vector3.normalize();
+
+					shade = vector3.dot( sun );
+
+					imageData[ i ] = ( 96 + shade * 128 ) * ( 0.5 + data[ j ] * 0.007 );
+					imageData[ i + 1 ] = ( 92 + shade * 96 ) * ( 0.5 + data[ j ] * 0.007 );
+					imageData[ i + 2 ] = ( shade * 96 ) * ( 0.5 + data[ j ] * 0.007 );
+				}
+
+				context.putImageData( image, 0, 0 );
+
+				// Scaled 4x
+
+				canvasScaled = document.createElement( 'canvas' );
+				canvasScaled.width = width * 4;
+				canvasScaled.height = height * 4;
+
+				context = canvasScaled.getContext( '2d' );
+				context.scale( 4, 4);
+				context.drawImage( canvas, 0, 0 );
+
+				image = context.getImageData( 0, 0, canvasScaled.width, canvasScaled.height );
+				imageData = image.data;
+
+				for ( var i = 0, l = imageData.length; i < l; i += 4 ) {
+
+					var v = ~~ ( Math.random() * 5 );
+
+					imageData[ i ] += v;
+					imageData[ i + 1 ] += v;
+					imageData[ i + 2 ] += v;
+
+				}
+
+				context.putImageData( image, 0, 0 );
+
+				return canvasScaled;
+
+			}
+
+			//
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				render();
+				stats.update();
+
+			}
+
+			function render() {
+
+				controls.update( clock.getDelta() );
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
+
+	</body>
+</html>

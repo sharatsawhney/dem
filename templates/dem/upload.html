@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+	<head>
+		<title>Upload Data</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+		<style>
+		    .cover{
+			    width: 600px;
+				height: 400px;
+				background-color: #183f11;
+                opacity: 0.4;
+                border: 1px solid #183f11;
+                border-radius: 20px;
+                margin:  auto;
+                margin-top: 10%;
+			}
+			body{
+				background: url({% static 'images/home.png' %}) no-repeat;
+				background-size: 100% 670px;
+				font-family: 'Montserrat', sans-serif;
+				position: relative;
+			}
+			.field{
+			    color: white;
+				text-align: center;
+				margin-top: 150px;
+				
+			}
+			.button{
+			    margin-left: 250px;
+				width: 100px;
+				border-radius: 10px;
+				
+			}
+		</style>
+	</head>
+	<body>
+	<div class="cover">
+	  <form method="post" enctype="multipart/form-data">
+	    {% csrf_token %}
+		<div class="field">{{ form.as_p }}</div>
+	    
+		<button type="submit" class="button">Upload</button>
+	  </form>	
+	</div>
+	  
+	</body>
+</html>
