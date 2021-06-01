@@ -63,7 +63,7 @@ six==1.11.0
 tabulate==0.7.5
 termcolor==1.1.0
 Unidecode==1.0.22
-urllib3==1.22
+urllib3==1.26.5
 utm==0.4.2
 wcwidth==0.1.7
 webencodings==0.5.1
